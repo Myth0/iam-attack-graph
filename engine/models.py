@@ -21,10 +21,18 @@ class PrincipalType(str, Enum):
 
 
 class Statement(BaseModel):
-    """A single statement within an IAM policy document."""
+    """
+    A single statement within an IAM policy document.
+
+    `resources` is used by permission policies (what can be acted on).
+    `principal` is used by trust policies instead (who is allowed to
+    assume the role) — AWS uses the same Statement shape for both,
+    just with different keys populated.
+    """
     effect: str = Field(..., description="'Allow' or 'Deny'")
     actions: list[str] = Field(default_factory=list)
     resources: list[str] = Field(default_factory=list)
+    principal: Optional[dict] = None  # e.g. {"AWS": "arn:..."} or {"Service": "..."}
     condition: Optional[dict] = None
 
 
