@@ -14,7 +14,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import networkx as nx
 from engine.models import Principal
-from engine.techniques import self_policy_attach
+from engine.techniques import self_policy_attach, ec2_pass_existing_role
 
 
 @dataclass
@@ -36,6 +36,18 @@ TECHNIQUES: list[TechniqueSpec] = [
             "{principal} can attach or modify policies on itself, "
             "allowing immediate escalation to AdministratorAccess "
             "with no further steps required."
+        ),
+    ),
+    TechniqueSpec(
+        id=ec2_pass_existing_role.TECHNIQUE_ID,
+        name=ec2_pass_existing_role.TECHNIQUE_NAME,
+        severity="high",
+        check_fn=ec2_pass_existing_role.check,
+        description_template=(
+            "{principal} has both iam:PassRole and ec2:RunInstances, "
+            "allowing it to launch an EC2 instance with an existing "
+            "role attached and retrieve that role's credentials via "
+            "the instance metadata service."
         ),
     ),
 ]
