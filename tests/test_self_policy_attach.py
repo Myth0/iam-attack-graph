@@ -15,7 +15,7 @@ def test_fixture_user_is_flagged_vulnerable():
         data = json.load(f)
     principals = parse_iam_export(data)
     user = next(p for p in principals if p.name == "test-user")
-    assert check(user) is True
+    assert check(user, None) is True
 
 
 def test_fixture_role_and_group_not_flagged():
@@ -26,8 +26,8 @@ def test_fixture_role_and_group_not_flagged():
     role = next(p for p in principals if p.name == "lambda-execution-role")
     group = next(p for p in principals if p.name == "developers")
 
-    assert check(role) is False
-    assert check(group) is False
+    assert check(role, None) is False
+    assert check(group, None) is False
 
 
 def test_role_with_attach_role_policy_on_self_is_vulnerable():
@@ -46,7 +46,7 @@ def test_role_with_attach_role_policy_on_self_is_vulnerable():
             )],
         )],
     )
-    assert check(role) is True
+    assert check(role, None) is True
 
 
 def test_deny_effect_does_not_count():
@@ -65,7 +65,7 @@ def test_deny_effect_does_not_count():
             )],
         )],
     )
-    assert check(user) is False
+    assert check(user, None) is False
 
 
 def test_resource_pointing_elsewhere_does_not_count():
@@ -84,7 +84,7 @@ def test_resource_pointing_elsewhere_does_not_count():
             )],
         )],
     )
-    assert check(user) is False
+    assert check(user, None) is False
 
 
 def test_wildcard_resource_counts_as_self():
@@ -103,7 +103,7 @@ def test_wildcard_resource_counts_as_self():
             )],
         )],
     )
-    assert check(user) is True
+    assert check(user, None) is True
 
 
 def test_group_is_never_flagged():
@@ -113,4 +113,4 @@ def test_group_is_never_flagged():
         arn="arn:aws:iam::123456789012:group/some-group",
         principal_type=PrincipalType.GROUP,
     )
-    assert check(group) is False
+    assert check(group, None) is False

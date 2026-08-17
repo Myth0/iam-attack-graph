@@ -31,7 +31,7 @@ def _resource_matches_self(resources: list[str], own_arn: str) -> bool:
     return False
 
 
-def check(principal: Principal) -> bool:
+def check(principal: Principal, graph) -> bool:
     """
     Returns True if this principal can attach/put a policy on itself,
     i.e. can trivially escalate to any permission level including admin.
