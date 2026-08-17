@@ -14,7 +14,11 @@ from engine.models import Principal, Policy, Statement, PrincipalType
 
 
 def _parse_statement(raw: dict) -> Statement:
-    """Normalize a single statement, handling Action/Resource as either str or list."""
+    """
+    Normalize a single statement, handling Action/Resource as either
+    str or list. Also captures 'Principal' for trust policy statements
+    (permission statements won't have this key, so it stays None).
+    """
     actions = raw.get("Action", [])
     if isinstance(actions, str):
         actions = [actions]
@@ -27,6 +31,7 @@ def _parse_statement(raw: dict) -> Statement:
         effect=raw.get("Effect", "Deny"),
         actions=actions,
         resources=resources,
+        principal=raw.get("Principal"),
         condition=raw.get("Condition"),
     )
 
