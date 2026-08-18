@@ -37,13 +37,17 @@ const stylesheet = [
     selector: 'node',
     style: {
       label: 'data(label)',
-      'background-color': '#888',
-      color: '#222',
-      'font-size': 10,
+      color: '#fff',
+      'font-size': 11,
+      'font-weight': 'bold',
       'text-valign': 'bottom',
-      'text-margin-y': 6,
-      width: 30,
-      height: 30,
+      'text-margin-y': 8,
+      'text-background-color': '#1a1a1a',
+      'text-background-opacity': 0.85,
+      'text-background-padding': 3,
+      'text-background-shape': 'roundrectangle',
+      width: 34,
+      height: 34,
     },
   },
   {
@@ -60,25 +64,30 @@ const stylesheet = [
   },
   {
     selector: 'node[severity = "critical"]',
-    style: { 'background-color': '#c0392b', 'border-width': 3, 'border-color': '#7a1f14' },
+    style: { 'background-color': '#e74c3c', 'border-width': 3, 'border-color': '#ffffff' },
   },
   {
     selector: 'node[severity = "high"]',
-    style: { 'background-color': '#e67e22', 'border-width': 3, 'border-color': '#a85c15' },
+    style: { 'background-color': '#f39c12', 'border-width': 3, 'border-color': '#ffffff' },
   },
   {
     selector: 'edge',
     style: {
       label: 'data(label)',
-      'font-size': 8,
+      color: '#fff',
+      'font-size': 9,
+      'text-background-color': '#1a1a1a',
+      'text-background-opacity': 0.85,
+      'text-background-padding': 2,
       'curve-style': 'bezier',
       'target-arrow-shape': 'triangle',
       width: 2,
-      'line-color': '#aaa',
-      'target-arrow-color': '#aaa',
+      'line-color': '#999',
+      'target-arrow-color': '#999',
     },
   },
 ];
+  
 
 function GraphView({ graph, findings }) {
   const elements = buildElements(graph, findings);
@@ -88,7 +97,7 @@ function GraphView({ graph, findings }) {
       <CytoscapeComponent
         elements={elements}
         stylesheet={stylesheet}
-        layout={{ name: 'cose', animate: false }}
+        layout={{ name: 'cose', animate: false, idealEdgeLength: 120, nodeRepulsion: 8000 }}
         style={{ width: '100%', height: '500px', border: '1px solid #ddd', borderRadius: '4px' }}
       />
     </div>
