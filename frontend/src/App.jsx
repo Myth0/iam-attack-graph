@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import './App.css';
+import GraphView from './GraphView';
 
 const API_URL = 'http://127.0.0.1:8000/analyze';
 
@@ -63,6 +64,9 @@ function App() {
             {result.summary.relationship_count} relationships,{' '}
             {result.summary.finding_count} finding(s)
           </p>
+
+          <h2>Attack Graph</h2>
+          <GraphView graph={result.graph} findings={result.findings} />
 
           <h2>Findings</h2>
           {result.findings.length === 0 ? (
