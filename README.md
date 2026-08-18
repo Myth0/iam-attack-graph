@@ -85,7 +85,10 @@ A sample fixture with a deliberate self-privesc scenario is included at `tests/f
 
 ## Demo
 
-*Live demo link coming soon — pending cloud deployment (see project roadmap).*
+**Live app:** https://iam-attack-graph-frontend.vercel.app
+**Live API:** https://iam-attack-graph-api.vercel.app (interactive docs at `/docs`)
+
+Try it immediately with the included sample fixture (`tests/fixtures/sample_iam_export.json`) — no AWS account required. It contains a deliberate self-privilege-escalation scenario for `test-user`.
 
 ## Documentation
 
