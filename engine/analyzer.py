@@ -14,7 +14,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import networkx as nx
 from engine.models import Principal
-from engine.techniques import self_policy_attach, ec2_pass_existing_role
+from engine.techniques import self_policy_attach, ec2_pass_existing_role, create_policy_version
 
 
 @dataclass
@@ -48,6 +48,18 @@ TECHNIQUES: list[TechniqueSpec] = [
             "allowing it to launch an EC2 instance with an existing "
             "role attached and retrieve that role's credentials via "
             "the instance metadata service."
+        ),
+    ),
+    TechniqueSpec(
+        id=create_policy_version.TECHNIQUE_ID,
+        name=create_policy_version.TECHNIQUE_NAME,
+        severity="critical",
+        check_fn=create_policy_version.check,
+        description_template=(
+            "{principal} can create a new version of a customer-managed "
+            "policy that is attached to it (directly or via group "
+            "membership), allowing it to grant itself arbitrary "
+            "permissions including full admin access."
         ),
     ),
 ]
