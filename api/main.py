@@ -8,6 +8,11 @@ memory and discarded after the response is sent (see THREAT_MODEL.md).
 
 from __future__ import annotations
 import json
+import sys
+from pathlib import Path
+
+# Ensure repo root is importable regardless of Vercel's working directory
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
